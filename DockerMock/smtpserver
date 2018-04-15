@@ -1,0 +1,9 @@
+# démarre le service docker
+service docker start
+
+# télécharge le container fake server smtp
+docker pull gessnerfl/fake-smtp-server
+
+# lance le container fake server smtp, le port 5025 est utilisé pour 
+# recevoir les mails et le 5080 pour accéder a l'interface web
+docker run -p 5025:5025 -p 5080:5080 gessnerfl/fake-smtp-server
