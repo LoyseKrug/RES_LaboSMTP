@@ -1,7 +1,10 @@
+package smtp;
+
+import pranks.Email;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
 
@@ -29,11 +32,7 @@ public class Client {
         //A IMPLEMENTER
     }
 
-    public void sendPrank(Email email){
-        // A IMPLEMENTER
-    }
-
-    public static void main(String ... args){
+    public void sendEmail(Email email){
         // A IMPLEMENTER
     }
 
