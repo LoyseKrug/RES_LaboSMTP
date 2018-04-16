@@ -2,12 +2,20 @@ package pranks;
 
 import java.util.LinkedList;
 
+/**
+ * Class representing formatted emails
+ */
 public class Email {
 
     LinkedList<String> recipients = new LinkedList();
     String sender;
     String joke;
 
+    /**
+     * Create the structure of the email
+     * @param group
+     * @param joke
+     */
     public Email(LinkedList<String> group, String joke){
         this.joke = joke;
         this.sender = group.get(0);
@@ -16,15 +24,30 @@ public class Email {
         }
     }
 
+    /**
+     * Getter for the list of recipients of the mail
+     * @return list of recipients as a LinkedList<String>
+     */
     public LinkedList<String> getRecipients(){
         return recipients;
     }
 
+    /**
+     * Getter for the sender of the mail
+     * @return sender of the mail as a String
+     */
     public String getSender() { return sender; }
 
+    /**
+     * Method that create the content of the message to send
+     * @return the message to send, as a LinkedList<String>
+     */
     public LinkedList<String> getMessage() {
+        //We create a LinkedList of Strings, containing the message in order to send it line by line to the server
+        //and therefore get the correct format for backslashes
         LinkedList<String> message = new LinkedList();
         String from = "From: " + sender;
+        message.add(from);
         String to = "To: ";
         for(int i = 0; i < recipients.size(); ++i){
             if(i != 0){
@@ -33,7 +56,7 @@ public class Email {
             to += recipients.get(i);
         }
         message.add(to);
-        String subject = "Subject: This is serious";
+        String subject = "Subject: Test1";
         message.add(subject);
         message.add("");
         message.add(joke);

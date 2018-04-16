@@ -4,42 +4,36 @@ import pranks.Email;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class Client {
+import static smtp.SMTPProtocol.*;
 
-    static final Logger LOG = Logger.getLogger(Client.class.getName());
-    final static int BUFFER_SIZE = 1024;
+/**
+ * Class representing a Client that will be able to communicate with the SMTP server and send emails
+ */
+public class Client {
 
     Socket clientSocket = null;
     PrintWriter pw = null;
     BufferedReader br = null;
     String host;
     int port;
-    String email;
 
+    /**
+     * Creation of a client who connect to the mock SMTP server and beginning of the conversation with the servr
+     * @throws IOException
+     */
     public Client() throws IOException {
         //a varaible properties will contain the properties given in an external file
         Properties properties = new Properties();
         InputStream is = null;
-
         is = new FileInputStream("./src/main/resources/server.properties");
-        /*
-        System.out.println(new File(".").getAbsolutePath());
-        //we extract the properties of the server from the server.properties file
-        InputStream is = getClass().getClassLoader().getResourceAsStream("./src/main/resources/server.properties");
-        if(is == null){
-            System.out.println("The propreties file could not be loaded");
-            throw new FileNotFoundException();
-        }
-        */
         properties.load(is);
+
         //once the properties are load in the file, we can access them through their name
         host = properties.getProperty("host");
         port = Integer.parseInt(properties.getProperty("port"));
-        email = properties.getProperty("email");
 
         //A socket is created to be linked to the server
         this.clientSocket = new Socket(host, port);
@@ -47,14 +41,13 @@ public class Client {
         br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
         String line;
-
         System.out.println("Cli: waiting for server greeting message !");
 
         if((line = br.readLine()).startsWith("554 ")) {
             System.out.println("Srv: " + line.toUpperCase());
-            pw.println("QUIT");
+            pw.println(CMD_QUIT);
             pw.flush();
-            System.out.println("Cli: " + "QUIT");
+            System.out.println("Cli: " + CMD_QUIT);
             return;
         } else if(line.startsWith("220 ")){
             System.out.println("Srv: " + line.toUpperCase());
@@ -65,72 +58,91 @@ public class Client {
             throw new IOException();
         }
 
-        String ehlo = "EHLO prank";
+        //If the server connect properly we can sent the EHLO command to start communication with the SMTP server
+        String ehlo = CMD_CONNECT + " prank";
         pw.println(ehlo);
         pw.flush();
         System.out.println("Cli: " + ehlo);
 
+        //We wait for the server answer
         System.out.println("Cli: waiting for server protocoles !");
         do {
             line = br.readLine();
             System.out.println("Srv: " + line.toUpperCase());
         } while (!line.startsWith("250 "));
-
-
-    }
-
-    public void disconnect(){
+        //The server is now ready to recept informations to send emails
 
     }
 
+    /**
+     * Close the connection with the SMTP server
+     * @throws IOException
+     */
+    public void disconnect() throws IOException {
+        pw.println(CMD_QUIT);
+        pw.flush();
+        System.out.println("Cli: QUIT");
+        //The server will answer with BYE
+        String line = br.readLine();
+        System.out.println("Srv: " + line.toUpperCase());
+        if(clientSocket.isConnected()){
+            clientSocket.close();
+        }
+    }
+
+    /**
+     * Send an email given in parameters to the SMTP server
+     * @param email
+     * @throws IOException
+     */
     public void sendEmail(Email email) throws IOException{
         String line = null;
 
         //we give the email address of the sender
-        String mailFrom = "MAIL FROM: " + email.getSender();
+        String mailFrom = CMD_FROM + email.getSender();
         pw.println(mailFrom);
         pw.flush();
         System.out.println("Cli:" + mailFrom);
-
-
+        //Read the answer of the server
         do {
             line = br.readLine();
             System.out.println("Srv: " + line.toUpperCase());
         } while (!line.startsWith("250 "));
 
-        //We give the recipients'email addresses
-        String mailTo = "RCPT TO: ";
         for(int i = 0; i < email.getRecipients().size(); ++i){
-            mailTo += email.getRecipients().get(i) + ", ";
+        //We give the recipients'email addresses
+            String mailTo = CMD_TO + email.getRecipients().get(i);
+            pw.println(mailTo);
+            pw.flush();
+            System.out.println("Cli:" + mailTo);
+            //read the answer of the server
+            do {
+                line = br.readLine();
+                System.out.println("Srv: " + line.toUpperCase());
+            } while (!line.startsWith("250 "));
         }
-        mailTo += this.email;
-        pw.println(mailTo);
-        pw.flush();
-        System.out.println("Cli:" + mailTo);
 
-        do {
-            line = br.readLine();
-            System.out.println("Srv: " + line.toUpperCase());
-        } while (!line.startsWith("250 "));
-
-        String data = "DATA";
-        pw.println(data);
+        pw.println(CMD_DATA);
         pw.flush();
-        System.out.println("Cli:" + data);
+        System.out.println("Cli:" + CMD_DATA);
         do {
             line = br.readLine();
             System.out.println("Srv: " + line.toUpperCase());
         } while (!line.startsWith(""));
 
         //The message is sent to the server
-        pw.println("Cli:" + email.getMessage());
-        pw.flush();
-        System.out.print(email.getMessage());
+        for(int i = 0; i < email.getMessage().size(); ++i){
+            pw.println(email.getMessage().get(i));
+            pw.flush();
+            System.out.println("Cli:" + email.getMessage().get(i));
+        }
         //The message is ended with a backslash, a  "." and a backslash
         pw.println(".");
         pw.flush();
         System.out.println(".");
-
+        //Read the answer of the server
+        line = br.readLine();
+        System.out.println("Srv: " + line.toUpperCase());
     }
 
 

@@ -1,14 +1,17 @@
-Blabla
-bli bli
+# LIST OF PRANKS
+#----------------------------------------------------------
+# Enter your list of jokes addresses respecting this format
+# 1) The pranks are separated by a line with a ==
+# 2) No empty line between the pranks
+#----------------------------------------------------------
+Ceci est une première ligne
+Et ceci est une deuxieme ligne
 ==
 Attention aux requins dans le lac de Neuchâtel!
+Pêche interdite avant midi
 ==
-bvskjalbvfsc
-gras
-f
-rs
-f
-r
+Je ne sais pas pourquoi, mais j'ai envie de manger une pomme
+...oui, j'ai faim
 ==
 shuoisgr
 srgssdg

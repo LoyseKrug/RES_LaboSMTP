@@ -5,6 +5,9 @@ import smtp.Client;
 
 import java.io.IOException;
 
+/**
+ * Main class, starts the PranksMaker
+ */
 public class Main {
 
     public static void main(String ... args) throws IOException {

@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
+/**
+ * Class generating pranks and sending forged emails to the victims
+ */
 public class PranksMaker{
 
     Client smtpClient;
@@ -18,6 +21,13 @@ public class PranksMaker{
     CommentedFileReader cfr = null;
     String line;
 
+    /**
+     * Constructor of PrankMaker
+     * @param smtpClient
+     * @param numberOfJokes
+     * @param groupSize
+     * @throws IOException
+     */
     public PranksMaker(Client smtpClient, int numberOfJokes, int groupSize) throws IOException {
         this.smtpClient = smtpClient;
         this.groupSize = groupSize;
@@ -45,25 +55,31 @@ public class PranksMaker{
             }
         }
 
+        //
         for(int i = 0; i < numberOfJokes; ++i){
             Email email = new Email(getGroup(), getJoke());
             smtpClient.sendEmail(email);
         }
+        smtpClient.disconnect();
     }
+
 
     private String getJoke(){
         int jokeNumber = random.nextInt(jokes.size());
         return jokes.get(jokeNumber);
     }
 
+
     private LinkedList<String> getGroup(){
         LinkedList<String> victims = new LinkedList<String>();
         int i = 0;
         while(i < groupSize){
-            int nextVictim = random.nextInt(groupSize);
-            if(!victims.contains(emailAddresses.get(nextVictim))){
-                victims.add(emailAddresses.get(nextVictim));
+            int nextVictim = random.nextInt(emailAddresses.size());
+            String victim = emailAddresses.get(nextVictim);
+            if(!victims.contains(victim)){
+                victims.add(victim);
                 ++i;
+                emailAddresses.remove(victim);
             }
         }
         return victims;
