@@ -1,9 +1,37 @@
+start="false";
+smtpport=5025;
+webport=5080;
+webctrl=5081;
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --startservice) start="$2"; shift 2;;
+    --smtpport) smtpport="$2"; shift 2;;
+    --webport) webport="$2"; shift 2;;
+    --webctrl) webctrl="$2"; shift 2;;
+    --help) echo "Following options available :";
+echo "--startservice [true|false]: starts the docker service, false by default";
+echo "--smtpport [port number]: specify the port of your computer you want tu use for smtp server (default 5025)";
+echo "--webport [port number]: specify the port of your computer you want for the webinterface (default 5080)";
+echo "--webctrl [port number] specify the port of the web controller interface you want to use (default 5081)";;
+
+    -*) echo "unknown option: $1" >&2; exit 1;;
+    *) echo "unknown argument: $1"; exit 1;;
+  esac
+done
+
+echo "Start docker service : $start";
+echo "SMTP port : $smtpport";
+echo "Web Interface port : $webport";
+echo "Web Control port : $webctrl";
+
 # démarre le service docker
-service docker start
+if [ $start == true ]; then
+	service docker start
+fi
 
 # télécharge le container fake server smtp
 docker pull gessnerfl/fake-smtp-server
 
 # lance le container fake server smtp, le port 5025 est utilisé pour 
 # recevoir les mails et le 5080 pour accéder a l'interface web
-docker run -p 5025:5025 -p 5080:5080 gessnerfl/fake-smtp-server
+docker run -p $smtpport:5025 -p $webport:5080 -p $webctrl:5081 gessnerfl/fake-smtp-server
