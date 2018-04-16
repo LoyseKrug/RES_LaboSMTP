@@ -45,25 +45,46 @@ public class Client {
         this.clientSocket = new Socket(host, port);
         pw = new PrintWriter(new BufferedOutputStream(clientSocket.getOutputStream()));
         br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-    }
 
-    public void disconnect(){
-        //A IMPLEMENTER
-    }
+        String line;
 
-    public void sendEmail(Email email) throws IOException{
-        String line = null;
+        System.out.println("Cli: waiting for server greeting message !");
 
-        //Initialisation of the communication with the SMTP server
+        if((line = br.readLine()).startsWith("554 ")) {
+            System.out.println("Srv: " + line.toUpperCase());
+            pw.println("QUIT");
+            pw.flush();
+            System.out.println("Cli: " + "QUIT");
+            return;
+        } else if(line.startsWith("220 ")){
+            System.out.println("Srv: " + line.toUpperCase());
+        } else {
+            System.out.println("Srv: " + line.toUpperCase());
+
+            System.out.println("Cli: Unrocognised command !");
+            throw new IOException();
+        }
+
         String ehlo = "EHLO prank";
         pw.println(ehlo);
         pw.flush();
         System.out.println("Cli: " + ehlo);
 
+        System.out.println("Cli: waiting for server protocoles !");
         do {
             line = br.readLine();
             System.out.println("Srv: " + line.toUpperCase());
         } while (!line.startsWith("250 "));
+
+
+    }
+
+    public void disconnect(){
+
+    }
+
+    public void sendEmail(Email email) throws IOException{
+        String line = null;
 
         //we give the email address of the sender
         String mailFrom = "MAIL FROM: " + email.getSender();
@@ -75,7 +96,7 @@ public class Client {
         do {
             line = br.readLine();
             System.out.println("Srv: " + line.toUpperCase());
-        } while (line.startsWith("250 OK"));
+        } while (!line.startsWith("250 "));
 
         //We give the recipients'email addresses
         String mailTo = "RCPT TO: ";
@@ -90,7 +111,7 @@ public class Client {
         do {
             line = br.readLine();
             System.out.println("Srv: " + line.toUpperCase());
-        } while (line.startsWith("250 Accepted"));
+        } while (!line.startsWith("250 "));
 
         String data = "DATA";
         pw.println(data);
