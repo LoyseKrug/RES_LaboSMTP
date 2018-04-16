@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 public class Email {
 
-    LinkedList<String> recipients;
+    LinkedList<String> recipients = new LinkedList();
     String sender;
     String joke;
 
@@ -33,6 +33,9 @@ public class Email {
             to += recipients.get(i);
         }
         message.add(to);
+        String subject = "Subject: This is serious";
+        message.add(subject);
+        message.add("");
         message.add(joke);
         return message;
     }

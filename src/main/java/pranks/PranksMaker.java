@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class PranksMaker{
 
-    Client smtpClient = null;
+    Client smtpClient;
     LinkedList<String> emailAddresses = new LinkedList();
     LinkedList<String> jokes = new LinkedList();
     Random random = new Random();
@@ -18,13 +18,12 @@ public class PranksMaker{
     CommentedFileReader cfr = null;
     String line;
 
-    public PranksMaker(String pathToEmailAddress, String pathToJokes, Client smtpClient, int numberOfJokes, int groupSize) throws IOException {
-
+    public PranksMaker(Client smtpClient, int numberOfJokes, int groupSize) throws IOException {
         this.smtpClient = smtpClient;
         this.groupSize = groupSize;
 
         //put all the separated e-mail addresses in a list
-        CommentedFileReader cfr = new CommentedFileReader(pathToEmailAddress);
+        CommentedFileReader cfr = new CommentedFileReader("./src/main/resources/emails.txt");
         while((line = cfr.getNextLine()) != null){
             emailAddresses.add(line);
         }
@@ -34,11 +33,11 @@ public class PranksMaker{
         }
 
         //put all the separated jokes in a list
-        CommentedFileReader cfr2 = new CommentedFileReader(pathToJokes);
+        CommentedFileReader cfr2 = new CommentedFileReader("./src/main/resources/pranks.txt");
         String prank = "";
-        while((line = cfr.getNextLine()) != null){
+        while((line = cfr2.getNextLine()) != null){
             //The jokes are split with "=="
-            if(line.equals("==\n") || line.equals("==\n\r") || line.equals("==\r")){
+            if(line.equals("==")){
                 jokes.add(prank);
                 prank = "";
             } else {
