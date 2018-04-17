@@ -1,18 +1,33 @@
-Blabla
-bli bli
+# LIST OF PRANKS
+#----------------------------------------------------------
+# Enter your list of jokes addresses respecting this format
+# 1) The pranks are separated by a line with a ==
+# 2) Every prank starts with a subject (Subject: <subject>), followed by an empty line
+# 4) Starting line with a # creates a comment. This line won't be displayed in the email
+#----------------------------------------------------------
+Subject: Des Lignes
+
+Ceci est une première ligne
+Et ceci est une deuxieme ligne
 ==
+Subject: Requins
+
 Attention aux requins dans le lac de Neuchâtel!
+Pêche interdite avant midi
 ==
-bvskjalbvfsc
-gras
-f
-rs
-f
-r
+Subject: I dunno
+
+Je ne sais pas pourquoi, mais j'ai envie de manger une pomme
+...être affamé, c'est dur...
 ==
-shuoisgr
+Subject: n importe quoi
+
+shuoisgréé
+
 srgssdg
 fesafesfegfrsg
 sgfrsae
 ==
-jores phpv ianvc
+Subject: Lalala
+
+jores phpv ianvcééé
