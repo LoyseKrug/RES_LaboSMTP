@@ -120,6 +120,7 @@ public class Client {
                 line = br.readLine();
                 System.out.println("Srv: " + line.toUpperCase());
             } while (!line.startsWith("250 "));
+
         }
 
         pw.print(CMD_DATA + "\r\n");
