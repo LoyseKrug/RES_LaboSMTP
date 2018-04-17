@@ -112,7 +112,7 @@ public class Client {
         for(int i = 0; i < email.getRecipients().size(); ++i){
         //We give the recipients'email addresses
             String mailTo = CMD_TO + email.getRecipients().get(i);
-            pw.println(mailTo + "\r\n");
+            pw.print(mailTo + "\r\n");
             pw.flush();
             System.out.println("Cli:" + mailTo);
             //read the answer of the server

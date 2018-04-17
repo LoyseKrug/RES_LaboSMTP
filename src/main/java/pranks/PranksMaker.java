@@ -38,8 +38,9 @@ public class PranksMaker{
             emailAddresses.add(line);
         }
 
+        //Check if the parameters entered by the user are usable
         if(groupSize < 3 || (groupSize * numberOfJokes) > emailAddresses.size()){
-            throw new IOException("the group size does't respect the rules");
+            throw new IOException("the groupSize/ numberOfJokes does't respect the rules");
         }
 
         //put all the separated jokes in a list
