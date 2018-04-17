@@ -56,8 +56,6 @@ public class Email {
             to += recipients.get(i);
         }
         message.add(to);
-        String subject = "Subject: Test1";
-        message.add(subject);
         message.add("");
         message.add(joke);
         return message;

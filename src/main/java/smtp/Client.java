@@ -45,7 +45,7 @@ public class Client {
 
         if((line = br.readLine()).startsWith("554 ")) {
             System.out.println("Srv: " + line.toUpperCase());
-            pw.println(CMD_QUIT);
+            pw.print(CMD_QUIT + "/r/n");
             pw.flush();
             System.out.println("Cli: " + CMD_QUIT);
             return;
@@ -54,13 +54,13 @@ public class Client {
         } else {
             System.out.println("Srv: " + line.toUpperCase());
 
-            System.out.println("Cli: Unrocognised command !");
+            System.out.println("Cli: Unrecognised command !");
             throw new IOException();
         }
 
         //If the server connect properly we can sent the EHLO command to start communication with the SMTP server
         String ehlo = CMD_CONNECT + " prank";
-        pw.println(ehlo);
+        pw.print(ehlo + "/r/n");
         pw.flush();
         System.out.println("Cli: " + ehlo);
 
@@ -79,7 +79,7 @@ public class Client {
      * @throws IOException
      */
     public void disconnect() throws IOException {
-        pw.println(CMD_QUIT);
+        pw.print(CMD_QUIT + "/r/n");
         pw.flush();
         System.out.println("Cli: QUIT");
         //The server will answer with BYE
@@ -100,7 +100,7 @@ public class Client {
 
         //we give the email address of the sender
         String mailFrom = CMD_FROM + email.getSender();
-        pw.println(mailFrom);
+        pw.print(mailFrom + "/r/n");
         pw.flush();
         System.out.println("Cli:" + mailFrom);
         //Read the answer of the server
@@ -112,7 +112,7 @@ public class Client {
         for(int i = 0; i < email.getRecipients().size(); ++i){
         //We give the recipients'email addresses
             String mailTo = CMD_TO + email.getRecipients().get(i);
-            pw.println(mailTo);
+            pw.println(mailTo + "/r/n");
             pw.flush();
             System.out.println("Cli:" + mailTo);
             //read the answer of the server
@@ -122,7 +122,7 @@ public class Client {
             } while (!line.startsWith("250 "));
         }
 
-        pw.println(CMD_DATA);
+        pw.print(CMD_DATA + "/r/n");
         pw.flush();
         System.out.println("Cli:" + CMD_DATA);
         do {
@@ -132,12 +132,12 @@ public class Client {
 
         //The message is sent to the server
         for(int i = 0; i < email.getMessage().size(); ++i){
-            pw.println(email.getMessage().get(i));
+            pw.print(email.getMessage().get(i) + "/r/n");
             pw.flush();
             System.out.println("Cli:" + email.getMessage().get(i));
         }
         //The message is ended with a backslash, a  "." and a backslash
-        pw.println(".");
+        pw.print("./r/n");
         pw.flush();
         System.out.println(".");
         //Read the answer of the server
