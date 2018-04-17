@@ -52,6 +52,7 @@ public class Email {
             }
             message += recipients.get(i);
         }
+        message +="\r\n";
         message += joke;
         return message;
     }

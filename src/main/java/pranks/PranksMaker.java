@@ -45,13 +45,20 @@ public class PranksMaker{
         //put all the separated jokes in a list
         CommentedFileReader cfr2 = new CommentedFileReader("./src/main/resources/pranks.txt");
         String prank = "";
+        boolean first = true;
         while((line = cfr2.getNextLine()) != null){
             //The jokes are split with "=="
             if(line.equals("==")){
                 jokes.add(prank);
                 prank = "";
+                first = true;
             } else {
-                prank += line + "\r\n";
+                if(first){
+                    first = false;
+                } else{
+                    prank += "\r\n";
+                }
+                prank += line;
             }
         }
 

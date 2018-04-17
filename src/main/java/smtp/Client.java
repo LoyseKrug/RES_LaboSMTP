@@ -132,7 +132,7 @@ public class Client {
         } while (!line.startsWith(""));
 
         //The message is sent to the server
-        pw.print(email.getMessage());
+        pw.print(email.getMessage() + "\r\n");
         pw.flush();
         System.out.println("Cli:" + email.getMessage());
 
