@@ -42,22 +42,17 @@ public class Email {
      * Method that create the content of the message to send
      * @return the message to send, as a LinkedList<String>
      */
-    public LinkedList<String> getMessage() {
+    public String getMessage() {
         //We create a LinkedList of Strings, containing the message in order to send it line by line to the server
         //and therefore get the correct format for backslashes
-        LinkedList<String> message = new LinkedList();
-        String from = "From: " + sender;
-        message.add(from);
-        String to = "To: ";
+        String message = "From: " + sender + "\r\n" + "To: ";
         for(int i = 0; i < recipients.size(); ++i){
             if(i != 0){
-                to += ", ";
+                message += ", ";
             }
-            to += recipients.get(i);
+            message += recipients.get(i);
         }
-        message.add(to);
-        message.add("");
-        message.add(joke);
+        message += joke;
         return message;
     }
 }
