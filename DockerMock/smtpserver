@@ -29,7 +29,7 @@ if [ $start == true ]; then
 	service docker start
 fi
 
-# télécharge le container fake server smtp
+# télécharge l'image du container fake server smtp
 docker pull gessnerfl/fake-smtp-server
 
 # lance le container fake server smtp, le port 5025 est utilisé pour 
