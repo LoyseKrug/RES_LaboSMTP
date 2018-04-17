@@ -40,16 +40,25 @@ The setup of the mook server will be fairly easy as we use a docker container th
 If you don't have a working install of docker please go to there website and install it : 
 https://www.docker.com/community-edition
 
-Now you have a running version of docker simply **run the script** named ` smtpstart` to launch the container.
+Now you have a running version of docker simply **run the script** named ` smtpstart` to launch the container. Please note that the `--webctrl ` argument is currently not working.
+
+![smtpserver usage](./figures/smtpscript.png)
+
+
+
 Please note that this script can take 5 arguments that are explained by writing `smtpstart --help`.
 
 Feel free to assign different ports to the **SMTP** server and to the **WEB interface**. 
 
 The script will automaticly download the container image if you don't have it then it will launch the container in detached mode. Note that the second step doesn't display anything in your terminal so please wait a moment  before you atempt to communicate with the server as it needs about 10 to 20 seconds to start.
 
+
+
 You can test that the server is online by writing `telnet localhost 5025` in your terminal. Note that `5025` is the default port of the SMTP server and you may have to change it if you aren't using the default settings.
 
 You can also open your favourit browser and go to http://localhost:5080 to withess the magnificence of your brand new WEB interface.
+
+![](./figures/webclient.png)
 
 ### Configure the client
 
@@ -87,5 +96,7 @@ groupSize=3			   // the number of email adresses in one groupe
 
 ### Sending the pranks
 
-Now that all your files are correctly configures simply run the jar file `RES_Labo03-1.0-SNAPSHOT.jar` and enjoy your prank!
+Now that all your files are correctly configures simply run the jar file `java -jar ./target/RES_Labo03-1.0-SNAPSHOT.jar` from the RES_LaboSMTP folder and enjoy your prank!
+
+![](./figures/jarexecution.png)
 
