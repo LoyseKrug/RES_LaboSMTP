@@ -51,7 +51,7 @@ public class PranksMaker{
                 jokes.add(prank);
                 prank = "";
             } else {
-                prank += line;
+                prank += line + "\r\n";
             }
         }
 
