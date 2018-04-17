@@ -1,6 +1,6 @@
-FileSplitter.class
-PranksMaker.class
-Client.class
-VictimGroup.class
-Joke.class
-Email.class
+util\CommentedFileReader.class
+pranks\Email.class
+smtp\SMTPProtocol.class
+pranks\PranksMaker.class
+main\Main.class
+smtp\Client.class

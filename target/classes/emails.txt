@@ -1,3 +1,10 @@
+# LIST OF EMAILS
+#----------------------------------------------------------
+# Enter your list of email addresses respecting this format
+# 1) One email address per line
+# 2) No empty line between the addresses
+# 3) Starting line with a # creates a comment. This line won't be displayed in the email
+#----------------------------------------------------------
 arthur.pendragon@camelot.com
 frodo.baggins@shire.com
 donald.trump@america.com

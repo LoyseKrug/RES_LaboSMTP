@@ -4,6 +4,7 @@ import pranks.PranksMaker;
 import smtp.Client;
 
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Main class, starts the PranksMaker
@@ -11,9 +12,15 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String ... args) throws IOException {
-        Client smtpClient = new Client();
 
-        PranksMaker pm = new PranksMaker(smtpClient, 2, 3);
+        Properties properties = new Properties();
+
+
+        Client smtpClient = new Client();
+        int numberOfPranks = Integer.parseInt(args[1]);
+        int groupSize = Integer.parseInt(args[2]);
+
+        new PranksMaker(smtpClient, numberOfPranks, groupSize);
     }
 
 }
