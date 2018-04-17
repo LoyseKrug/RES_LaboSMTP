@@ -38,7 +38,7 @@ public class PranksMaker{
             emailAddresses.add(line);
         }
 
-        if(groupSize < 3 || groupSize > emailAddresses.size()){
+        if(groupSize < 3 || (groupSize * numberOfJokes) > emailAddresses.size()){
             throw new IOException("the group size does't respect the rules");
         }
 
@@ -63,13 +63,13 @@ public class PranksMaker{
         smtpClient.disconnect();
     }
 
-
+    //get a random joke in the list of jokes
     private String getJoke(){
         int jokeNumber = random.nextInt(jokes.size());
         return jokes.get(jokeNumber);
     }
 
-
+    //create a random group from the list of emails
     private LinkedList<String> getGroup(){
         LinkedList<String> victims = new LinkedList<String>();
         int i = 0;

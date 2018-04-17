@@ -13,7 +13,7 @@ public class Main {
     public static void main(String ... args) throws IOException {
         Client smtpClient = new Client();
 
-        //if(args.length != 3){
+        //if(args.length != 3 ){
         //    System.out.println("Wrong number of arguments");
         //return;
         //}
