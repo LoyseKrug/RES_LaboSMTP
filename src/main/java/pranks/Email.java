@@ -45,7 +45,10 @@ public class Email {
     public String getMessage() {
         //We create a LinkedList of Strings, containing the message in order to send it line by line to the server
         //and therefore get the correct format for backslashes
-        String message = "From: " + sender + "\r\n" + "To: ";
+        String message = "From: " + sender + "\r\n";
+        ////We add this line to fromate the email in ordre to be able to send special characters
+        //message += "Content-Type: text/plain; charset=utf-8\r\n";
+        message += "To: ";
         for(int i = 0; i < recipients.size(); ++i){
             if(i != 0){
                 message += ", ";
