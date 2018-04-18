@@ -1,6 +1,6 @@
-util\CommentedFileReader.class
-pranks\Email.class
-smtp\SMTPProtocol.class
-pranks\PranksMaker.class
-main\Main.class
-smtp\Client.class
+smtp/Client.class
+util/CommentedFileReader.class
+smtp/SMTPProtocol.class
+pranks/Email.class
+pranks/PranksMaker.class
+main/Main.class

@@ -1,0 +1,12 @@
+# LIST OF EMAILS
+#----------------------------------------------------------
+# Enter your list of email addresses respecting this format
+# 1) One email address per line
+# 2) No empty line between the addresses
+# 3) Starting line with a # creates a comment. This line won't be displayed in the email
+#----------------------------------------------------------
+adrien.allemand@heig-vd.ch
+loyse.krug@heig-vd.ch
+james.smith@heig-vd.ch
+olivier.liechti@heig-vd.ch
+
